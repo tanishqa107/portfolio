@@ -1,0 +1,41 @@
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    color: white;
+    font-family: Arial, sans-serif;
+  }
+  
+  #intro {
+    text-align: center;
+  }
+  
+  #greeting {
+    font-size: 4rem;
+    font-family: serif;
+    animation: fade 0.2s ease-in-out;
+    position: relative;
+    padding-left: 1.5rem; /* Add space for the bullet */
+  }
+  
+  #greeting::before {
+    content: "•"; /* The bullet point */
+    position: absolute;
+    left: 0; /* Position it to the left of the text */
+    color: white; /* Match the text color */
+    font-size: 4rem; /* Match the text size */
+  }
+  
+  
+  @keyframes fade {
+    0%, 100% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+  }

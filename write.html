@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      background: #1a1a1a;
+      color: white;
+      font-family: serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    
+    h1 {
+      text-align: center;
+      font-size: 3.5em;
+      margin-bottom: 10px;
+      font-family: serif;
+    }
+    
+    p {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 40px;
+      font-family: serif;
+    }
+    
+    .gallery-container {
+      position: relative;
+      width: 80%;
+      max-width: 1000px;
+      overflow: hidden;
+    }
+    
+    .gallery {
+      display: flex;
+      transition: transform 0.5s ease;
+    }
+    
+    .tile {
+      min-width: calc(33.33% - 20px);
+      margin: 10px;
+      position: relative;
+    }
+
+    .tile button {
+      all: unset;
+      width: 100%;
+      display: block;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .tile img {
+      width: 100%;
+      height: 350px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+    
+    .tile-title {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      color: white;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+      font-size: 1.5em;
+    }
+    
+    .nav-button {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255,255,255,0.2);
+      border: none;
+      color: white;
+      padding: 20px;
+      cursor: pointer;
+      font-size: 24px;
+      border-radius: 50%;
+      transition: background 0.3s;
+      z-index: 10;
+    }
+    
+    .nav-button:hover {
+      background: rgba(255,255,255,0.3);
+    }
+    
+    .prev {
+      left: 10px;
+    }
+    
+    .next {
+      right: 10px;
+    }
+
+    .transition-overlay {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: black;
+      border-radius: 50%;
+      z-index: 20;
+      transform: translate(-50%, -50%);
+      transition: width 0.8s ease-out, height 0.8s ease-out;
+    }
+
+    .expand {
+      width: 200vw;
+      height: 200vh;
+    }
+  </style>
+</head>
+<body>
+  <h1>Ink Echoes</h1>
+  <p>Tap in to flow in the Silent Reveries</p>
+  
+  <div class="gallery-container">
+    <button class="nav-button prev">&#8249;</button>
+    <div class="gallery">
+      <div class="tile">
+        <button onclick="openImage('https://tanishqadwivedi7.medium.com/the-crown-of-the-peak-ed636548d329')">
+          <div class="tile-title"></div>
+          <img src="./logo/quite.png" alt="Nature 1">
+        </button>
+      </div>
+      <div class="tile">
+        <button onclick="openImage('https://tanishqadwivedi7.medium.com/natures-grandeur-651acf6ff116')">
+          <div class="tile-title"></div>
+          <img src="./logo/nat.png" alt="Nature 2">
+        </button>
+      </div>
+      <div class="tile">
+        <button onclick="openImage('https://tanishqadwivedi7.medium.com/oceanic-silence-4071c98fa09d')">
+          <div class="tile-title"></div>
+          <img src="./logo/oce.png" alt="Nature 3">
+        </button>
+      </div>
+      <div class="tile">
+        <button onclick="openImage('https://tanishqadwivedi7.medium.com/imperfection-beauty-8bb0e73ef679')">
+          <div class="tile-title"></div>
+          <img src="./logo/po.jpeg" alt="Nature 4">
+        </button>
+      </div>
+      <div class="tile">
+        <button onclick="openImage('https://tanishqadwivedi7.medium.com/growing-up-6519dca2076f')">
+          <div class="tile-title"></div>
+          <img src="./logo/childhood.jpeg" alt="Nature 5">
+        </button>
+      </div>
+      <div class="tile">
+        <button onclick="openImage('https://tanishqadwivedi7.medium.com/keeping-it-to-yourself-2999bc9c05a7')">
+          <div class="tile-title"></div>
+          <img src="./logo/okay.jpeg" alt="Nature 6">
+        </button>
+      </div>
+      <div class="tile">
+        <button onclick="openImage('https://tanishqadwivedi7.medium.com/cup-of-tea-13196c098d3c')">
+          <div class="tile-title"></div>
+          <img src="./logo/old.jpeg" alt="Nature 7">
+        </button>
+      </div>
+      <div class="tile">
+        <button onclick="openImage('https://tanishqadwivedi7.medium.com/d62eab4731e8')">
+          <div class="tile-title"></div>
+          <img src="./logo/dreams.jpeg" alt="Nature 8">
+        </button>
+      </div>
+      <div class="tile">
+        <button onclick="openImage('https://tanishqadwivedi7.medium.com/arrived-e53e16654ef9')">
+          <div class="tile-title"></div>
+          <img src="./logo/lo.jpeg" alt="Nature 9">
+        </button>
+      </div>
+    </div>
+    <button class="nav-button next">&#8250;</button>
+  </div>
+
+  <script>
+    const gallery = document.querySelector('.gallery');
+    let currentPosition = 0;
+    const tilesPerView = 3;
+    const totalTiles = document.querySelectorAll('.tile').length;
+
+    function updateGallery() {
+      const tileWidth = gallery.querySelector('.tile').offsetWidth + 20;
+      gallery.style.transform = `translateX(-${currentPosition * tileWidth}px)`;
+    }
+
+    document.querySelector('.prev').addEventListener('click', () => {
+      if (currentPosition > 0) {
+        currentPosition -= tilesPerView;
+        updateGallery();
+      }
+    });
+
+    document.querySelector('.next').addEventListener('click', () => {
+      if (currentPosition < totalTiles - tilesPerView) {
+        currentPosition += tilesPerView;
+        updateGallery();
+      }
+    });
+
+    function openImage(link) {
+      window.location.href = link;
+    }
+  </script>
+</body>
+</html>
+
