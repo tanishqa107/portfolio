@@ -9,7 +9,7 @@ function displayGreetings() {
     setTimeout(displayGreetings, 300); // Change greetings every second
   } else {
     // After displaying all greetings, navigate to another page
-    window.location.href = "index.html"; // Replace with your actual page URL
+    window.location.href = "front.html"; // Replace with your actual page URL
   }
 }
 
